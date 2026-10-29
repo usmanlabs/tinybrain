@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Urlshortener {
+  long_url     String
+  exp_time     DateTime?
+  custom_alias String    @id
+
+  @@map("urlshortener")
+}
+
+model ShortLink {
+  slug           String   @id
+  destinationUrl String   @map("destination_url")
+  click          Int      @default(0)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("short_links")
+}
